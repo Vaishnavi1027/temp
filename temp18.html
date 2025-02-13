@@ -1,27 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script>
-        function showData(){
-            let a = document.getElementById('name').value;
-            let b = document.getElementById('email').value;
-            let c = document.getElementById('password').value;
-            let d = document.getElementById('dob').value;
-            let str = `${a} , ${b} , ${c} , ${d} `;
-            data.innerHTML = str;
+      let users = [];
+      function chkuser(){
+        let email = document.getElementById('email').value;
+        let password = document.getElementById('password').value;
+        let length = users.length
+        for(let i=0;i<length;i++)
+      {
+        if(users[i].email==email && users[i].password==password){
+            root.innerHTML = `
+            <div>Welcome</div>
+            <button onclick = 'showLogin()'>Logout</button>`
         }
+      }
+      }
+      function showLogin(){
+        root.innerHTML = `
+        <h1>Login Form</h1>
+        <p><input type="text" id="email" placeholder="Email Address" /></p>
+        <p><input type="password" id="password" placeholder="Password" /></p>
+        <button onclick="chkuser()">Log In</button>
+        <button onclick = "showForm()">Create Account</button>
+        `
+      }
+
+
+      function showForm(){
+        root.innerHTML = `
+        <h1>Registration Form</h1>
+        <p><input type="text" id="name" placeholder="Name" /></p>
+        <p><input type="text" id="email" placeholder="Email Address" /></p>
+        <p><input type="password" id="password" placeholder="Password" /></p>
+        <p><input type="date" id="dob" placeholder="Date of Birth" /></p>
+        <button onclick="addUser()">Register</button>
+        <div id="data"></div>
+    `;
+      }
+
+
+      function deleteUser(index){
+        users.splice(index,1);
+        showUsers();
+      }
+
+
+      function showUsers() {
+        let length = users.length;
+        let str = ""
+        for (let i = 0; i < length; i++) {
+          str += `<div>
+            ${users[i].name}-
+            ${users[i].email}-
+            ${users[i].password}-
+            ${users[i].dob}
+            <button onclick='deleteUser(${i})'>Delete</button>
+            </div>`
+        }
+        data.innerHTML = str;
+      }
+
+
+      function addUser() {
+        let a = document.getElementById("name").value;
+        let b = document.getElementById("email").value;
+        let c = document.getElementById("password").value;
+        let d = document.getElementById("dob").value;
+        //let data = document.getElementById('data');
+        let user = {
+          name: a,
+          email: b,
+          password: c,
+          dob: d,
+        };
+        users.push(user);
+        showUsers();
+        showLogin()
+        //data.innerHTML = `${a} , ${b} , ${c} , ${d} <br>`;
+      }
+      //showForm()
     </script>
-</head>
-<body>
-    <h1>Registration Form</h1>
-    <p><input type = "text" id = "name" placeholder = "Name"></p>
-    <p><input type = "text" id = "email" placeholder = "Email Address"></p>
-    <p><input type = "password" id = "password" placeholder = "Password"></p>
-    <p><input type="date" id="dob" placeholder="Date of Birth"></p>
-    <button onclick = "showData()">Register</button>
-    <div id = "data"></div>
-</body>
+  </head>
+  <body>
+    <body onload = "showLogin()">
+        <div id="root"></div>
+    <!--<h1>Registration Form</h1>
+    <p><input type="text" id="name" placeholder="Name" /></p>
+    <p><input type="text" id="email" placeholder="Email Address" /></p>
+    <p><input type="password" id="password" placeholder="Password" /></p>
+    <p><input type="date" id="dob" placeholder="Date of Birth" /></p>
+    <button onclick="addUser()">Register</button>
+    <div id="data"></div>-->
+  </body>
 </html>
