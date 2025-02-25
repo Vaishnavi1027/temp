@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <img src="/assets/images/ball.png" id="ball" width="100px" />
+      <img src="/assets/images/basket.png" id="basket" width="100px" />
+    </div>
+    <script>
+      ball.style.position = "absolute";
+      basket.style.position = "absolute";
+      let t = 0;
+      let l = 0;
+      let basket_top = 400;
+      let basket_left = 0;
+      function f1() {
+        t++;
+        ball.style.top = t + "px";
+        ball.style.left = l + "px";
+        if (t < 500) {
+          setTimeout(f1, 10);
+        } else {
+          t = 1;
+          l = Math.random() * 800;
+          f1();
+        }
+      }
+      
+      f1();
+      basket.style.top = basket_top + "px";
+      basket.style.left = basket_left + "px";
+      let b = document.body;
+      b.onkeydown =
+        b.onkeyup =
+        b.onkeypress =
+          function handle(e) {
+            if (e.key == "ArrowLeft") basket_left -= 5;
+            if (e.key == "ArrowUp") basket_top -= 10;
+            if (e.key == "ArrowRight") basket_left += 5;
+            if (e.key == "ArrowDown") basket_top += 10;
+            basket.style.left = basket_left + "px";
+            basket.style.top = basket_top + "px";
+          };
+    </script>
+  </body>
+</html>
+
